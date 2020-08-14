@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
-require_relative 'dice.rb'
+require_relative './classes/player.rb'
+require_relative './classes/dice.rb'
 
-puts "🎲🎲 Welcome to DiceGame 🎲🎲\n"
+puts "🎲 Welcome to DiceGame 🎲\n\n"
 
 puts 'Insert player name:'
-player_name = gets.chomp
+@player = Player.new(gets.chomp)
+@opponent = Player.new('PC')
 
-puts "\nWelcome #{player_name}!"
-
+puts "\nWelcome #{@player.name}!"
 puts 'Please select (r) to roll, (q) for quit'
 
 loop do
@@ -17,15 +18,15 @@ loop do
 
   case input
   when 'r'
-    player_dice = Dice.new.value
-    opponent_dice = Dice.new.value
+    @player.roll
+    @opponent.roll
 
-    puts "\nYou: #{player_dice}"
-    puts "Opponent: #{opponent_dice}\n"
+    puts "\nYou: #{@player.score}"
+    puts "Opponent: #{@opponent.score}\n"
 
-    if player_dice > opponent_dice
+    if @player.score > @opponent.score
       puts '🎉 You won! 🎉'
-    elsif opponent_dice > player_dice
+    elsif @opponent.score > @player.score
       puts '😢 You loose! 😢'
     else
       puts '🤷‍♂️ Tie! 🤷‍♂️'
