@@ -3,14 +3,22 @@
 require_relative './classes/player.rb'
 require_relative './classes/dice.rb'
 
+def roll
+  puts "\nRolling...\n\n"
+  @player1.roll
+  @player2.roll
+end
+
 puts "🎲 Welcome to DiceGame 🎲\n\n"
 
-puts 'Insert player name:'
-@player = Player.new(gets.chomp)
-@opponent = Player.new('PC')
+puts 'Insert player 1:'
+@player1 = Player.new(gets.chomp)
+puts 'Insert player 2:'
+@player2 = Player.new(gets.chomp)
 
-puts "\nWelcome #{@player.name}!"
-puts 'Please select (r) to roll, (q) for quit'
+roll
+
+puts 'Please select (r) to roll again, (1 or 2) to guess, (q) for quit'
 
 loop do
   print '> '
@@ -18,19 +26,20 @@ loop do
 
   case input
   when 'r'
-    @player.roll
-    @opponent.roll
+    roll
+  when '1'..'2'
+    puts "#{@player1.name} score: #{@player1.score}"
+    puts "#{@player2.name} score: #{@player2.score}"
 
-    puts "\nYou: #{@player.score}"
-    puts "Opponent: #{@opponent.score}\n"
-
-    if @player.score > @opponent.score
-      puts '🎉 You won! 🎉'
-    elsif @opponent.score > @player.score
-      puts '😢 You loose! 😢'
+    if @player1.score == @player2.score
+      puts 'Draw 🤷‍♂️'
+    elsif (input.to_i == 1 && (@player1.score > @player2.score)) || (input.to_i == 2 && (@player2.score > @player1.score))
+      puts 'You won! 🏆'
     else
-      puts '🤷‍♂️ Tie! 🤷‍♂️'
+      puts 'You loose! 🥺'
     end
+
+    roll
   when 'q'
     puts 'Goodbye!'
     break
