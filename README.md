@@ -1,3 +1,5 @@
 # DiceGame
 
-A dice game with an opponent, in Ruby.
+A dice game, in Ruby.
+
+Both players roll the dice, you have to guess who's the winner!
